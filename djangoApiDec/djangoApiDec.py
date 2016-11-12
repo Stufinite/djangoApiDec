@@ -52,30 +52,30 @@ def queryString_required(strList):
 	return _dec
 
 def timing(func):
-    @wraps(func)
-    def wrap(*args, **kw):
-        ts = time.time()
-        result = func(*args, **kw)
-        te = time.time()
-        logging.info(
-            'It cost {} seconds to do {}'.format(te-ts, func.__name__))
-        return result
-    return wrap
+	@wraps(func)
+	def wrap(*args, **kw):
+		ts = time.time()
+		result = func(*args, **kw)
+		te = time.time()
+		logging.info(
+			'It cost {} seconds to do {}'.format(te-ts, func.__name__))
+		return result
+	return wrap
 
 def removeInputFile(func):
 	def remove_file_if_exist(file_name):
-	    """Remove file if it exist
+		"""Remove file if it exist
 
-	    Args:
-	        file_name: name of the file to be removed
-	    """
-	    file = Path(file_name)
-	    if file.is_file():
-	        os.remove(file_name)
-    @wraps(func)
-    def wrap(*args, **kw):
-        result = func(*args, **kw)
-        if not args[1].keep_temp_files:
-            remove_file_if_exist(args[0])
-        return result
-    return wrap
+		Args:
+			file_name: name of the file to be removed
+		"""
+		file = Path(file_name)
+		if file.is_file():
+			os.remove(file_name)
+	@wraps(func)
+	def wrap(*args, **kw):
+		result = func(*args, **kw)
+		if not args[1].keep_temp_files:
+			remove_file_if_exist(args[0])
+		return result
+	return wrap
