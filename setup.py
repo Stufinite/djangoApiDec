@@ -11,4 +11,8 @@ setup(
     download_url = 'download link you saved',
     keywords = ['tag1', 'tag2'],
     classifiers = [],
+    license='MIT',
+    install_requires=[
+        'django==1.10.3',
+    ],
 )
