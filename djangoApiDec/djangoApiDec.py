@@ -63,6 +63,15 @@ def timing(func):
     return wrap
 
 def removeInputFile(func):
+	def remove_file_if_exist(file_name):
+	    """Remove file if it exist
+
+	    Args:
+	        file_name: name of the file to be removed
+	    """
+	    file = Path(file_name)
+	    if file.is_file():
+	        os.remove(file_name)
     @wraps(func)
     def wrap(*args, **kw):
         result = func(*args, **kw)
