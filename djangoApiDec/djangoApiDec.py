@@ -1,8 +1,9 @@
 from django.http import Http404
 from pathlib import Path
-import time, logging, os
+import time, logging, os, urllib, requests, json
 from datetime import datetime
 from functools import wraps
+from django.urls import reverse
 def date_proc(func):
 	"""	An decorator checking whether date parameter is passing in or not. If not, default date value is all PTT data.
 		Else, return PTT data with right date.
@@ -11,7 +12,7 @@ def date_proc(func):
 		request: WSGI request parameter getten from django.
 
 	Returns:
-		date: 
+		date:
 			a datetime variable, you can only give year, year + month or year + month + day, three type.
 			The missing part would be assigned default value 1 (for month is Jan, for day is 1).
 	"""
@@ -22,7 +23,7 @@ def date_proc(func):
 		elif 'date' not in request.GET:
 			date = datetime.today()
 			return func(request, date)
-		else:			
+		else:
 			date = tuple(int(intValue) for intValue in request.GET['date'].split('-'))
 			if len(date) == 3:
 				date = datetime(*date)
@@ -79,3 +80,24 @@ def removeInputFile(func):
 			remove_file_if_exist(args[0])
 		return result
 	return wrap
+
+def getJsonFromApi(request, protocol, app, urlName, *queryStringTuple):
+	"""Return json from querying Web Api
+
+		Args:
+			request: http request object got from django
+			protocol: http or https
+			app: django app name
+			urlName: name of django URL pattern
+			queryStringTuple: a tuple containing many tuples, first elements is queryString and second is value, eq (('date', '2016-10-10'))
+
+		Returns: json format dictionary
+		"""
+	urlPattern = reverse('{}:{}'.format(app, urlName))
+	apiURL = request.get_host() + urlPattern + "?" 
+	queryString = ""
+	for i in queryStringTuple:
+		queryString+="{}={}&".format(str(i[0]), urllib.parse.quote(str(i[1])))
+	jsonText = requests.get('{}://'.format(protocol) + apiURL + queryString)
+	jsonText = json.loads(jsonText.text)
+	return jsonText
