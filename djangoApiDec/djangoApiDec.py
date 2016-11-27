@@ -28,9 +28,9 @@ def date_proc(func):
 			if len(date) == 3:
 				date = datetime(*date)
 			elif len(date) == 2:
-				date = datetime(*date, 1)
+				date = datetime(*date, day = 1)
 			else:
-				date = datetime(*date, 1, 1)
+				date = datetime(*date, month = 1, day = 1)
 			return func(request, date)
 	return wrapped
 
