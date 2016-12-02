@@ -14,5 +14,7 @@ setup(
     license='MIT',
     install_requires=[
         'django==1.10.3',
+        'requests',
+        'simplejson'
     ],
 )
