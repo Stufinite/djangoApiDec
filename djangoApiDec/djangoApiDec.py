@@ -82,7 +82,7 @@ def removeInputFile(func):
 		return result
 	return wrap
 
-def getJsonFromApi(request, protocol, app, urlName, *queryStringTuple):
+def getJsonFromApi(request, protocol, app, urlName, queryStringTuple):
 	"""Return json from querying Web Api
 
 		Args:
