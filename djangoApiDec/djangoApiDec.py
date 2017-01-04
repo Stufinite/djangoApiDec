@@ -101,6 +101,5 @@ def getJsonFromApi(request, protocol, app, urlName, queryStringTuple):
 		queryString+="{}={}&".format(str(i[0]), urllib.parse.quote(str(i[1])))
 	print('{}://'.format(protocol) + apiURL + queryString)
 	jsonText = requests.get('{}://'.format(protocol) + apiURL + queryString)
-	print(jsonText.text)
 	jsonText = json.loads(jsonText.text)
 	return jsonText
