@@ -59,8 +59,7 @@ def timing(func):
 		ts = time.time()
 		result = func(*args, **kw)
 		te = time.time()
-		logging.info(
-			'It cost {} seconds to do {}'.format(te-ts, func.__name__))
+		print('It cost {} seconds to do {}'.format(te-ts, func.__name__))
 		return result
 	return wrap
 
