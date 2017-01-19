@@ -17,4 +17,5 @@ setup(
         'requests',
         'simplejson'
     ],
+    zip_safe=True
 )
