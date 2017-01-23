@@ -8,7 +8,7 @@ setup(
     author = 'davidtnfsh',
     author_email = 'davidtnfsh@gmail.com',
     url = 'https://github.com/Stufinite/djangoApiDec',
-    download_url = 'https://github.com/Stufinite/djangoApiDec/archive/v1.2.tar.gz',,
+    download_url = 'https://github.com/Stufinite/djangoApiDec/archive/v1.2.tar.gz',
     keywords = ['django', 'decorator', 'api'],
     classifiers = [],
     license='MIT',
