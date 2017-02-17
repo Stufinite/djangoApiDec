@@ -76,8 +76,7 @@ def removeInputFile(func):
 	@wraps(func)
 	def wrap(*args, **kw):
 		result = func(*args, **kw)
-		if not args[1].keep_temp_files:
-			remove_file_if_exist(args[0])
+		remove_file_if_exist(args[1])
 		return result
 	return wrap
 
