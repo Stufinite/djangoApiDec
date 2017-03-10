@@ -98,24 +98,15 @@ def removeInputFile(func):
 		return result
 	return wrap
 
-def getJsonFromApi(request, protocol, app, urlName, queryStringTuple):
+def getJsonFromApi(view, request):
 	"""Return json from querying Web Api
 
 		Args:
-			request: http request object got from django
-			protocol: http or https
-			app: django app name
-			urlName: name of django URL pattern
-			queryStringTuple: a tuple containing many tuples, first elements is queryString and second is value, eq (('date', '2016-10-10'))
-
+			view: django view function.
+			request: http request object got from django.
+				
 		Returns: json format dictionary
 		"""
-	urlPattern = reverse('{}:{}'.format(app, urlName))
-	apiURL = request.get_host() + urlPattern + "?" 
-	queryString = ""
-	for i in queryStringTuple:
-		queryString+="{}={}&".format(str(i[0]), urllib.parse.quote(str(i[1])))
-	print('{}://'.format(protocol) + apiURL + queryString)
-	jsonText = requests.get('{}://'.format(protocol) + apiURL + queryString)
-	jsonText = json.loads(jsonText.text)
+	jsonText = view(request)
+	jsonText = json.loads(jsonText.content.decode('utf-8'))
 	return jsonText
